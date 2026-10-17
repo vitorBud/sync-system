@@ -34,7 +34,7 @@ export function Controls() {
     {!catalog && <p className="control-feedback" role="status">{busy ? 'Verificando este computador e seus aplicativos…' : 'Sem verificação atual. Tente Atualizar.'}</p>}
     {catalog?.devices.map(device => <section key={device.id} className="card device-card">
       <div className="device-heading"><h2>{device.name}</h2>
-        <span className={'device-badge' + (device.status === 'Online' || device.status === 'Sunshine disponível' || device.status === 'Sessão em uso' ? ' available' : '')}>{device.status}</span></div>
+        <span className={'device-badge' + (device.status === 'Online' || device.status === 'Ligado' ? ' available' : '')}>{device.status}</span></div>
       <p>{device.detail}</p>
       <div className="device-actions">{device.capabilities.map(capability =>
         <button key={capability.actionId} disabled={busy !== null || !capability.enabled} title={capability.reason ?? undefined}

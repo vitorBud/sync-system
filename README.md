@@ -28,7 +28,7 @@ Se o Cargo não for encontrado após instalar Rust, reabra o VS Code para atuali
 - Área Pessoal: notas locais e foco visual.
 - LED adiado para o final, desabilitado na compilação padrão.
 
-Ações e estados têm limites explícitos: Sunshine disponível não confirma Switch conectado; Remote Play instalado não confirma PS5 online; pacote Wake-on-LAN enviado não confirma PC ligado. Não existe desligamento remoto nesta etapa.
+Ações e estados têm limites explícitos: Sunshine Ligado indica apenas serviço respondendo, não Switch conectado; Remote Play instalado não confirma PS5 online; pacote Wake-on-LAN enviado não confirma PC ligado. Não existe desligamento remoto nesta etapa.
 
 ## Configurar a rede
 
@@ -50,7 +50,7 @@ npm run build
 cargo test --manifest-path src-tauri/Cargo.toml --lib
 ~~~
 
-O shell foi compilado e executado no Windows. Os testes não desligam o computador. Consumo em repouso, múltiplos monitores/DPI, despertar com o alvo desligado e streaming real para Switch ainda exigem validação no ambiente.
+O shell foi compilado e executado no Windows. Os testes não desligam o computador. O usuário confirmou em 17/10/2026 que controlou o PC gamer pelo Nintendo Switch usando Moonlight com Sunshine. A transmissão real está validada por esse teste manual. O indicador do SYNC foi simplificado para Ligado quando o serviço Sunshine responde e Indisponível quando não há resposta válida; ele não representa uso ativo do Switch. Consumo em repouso, múltiplos monitores/DPI e despertar com o alvo desligado ainda exigem validação no ambiente.
 
 ## Ordem de desenvolvimento
 

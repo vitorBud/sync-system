@@ -25,7 +25,7 @@ A interface encaminha um deviceId e um actionId fechados por enum. O backend val
 
 As verificações acontecem ao abrir a área de dispositivos e ao atualizar ou concluir uma ação. Não existe polling permanente. Uma verificação que falha remove o catálogo anterior da interface; horário da última consulta fica explícito.
 
-O Sunshine é verificado no endpoint HTTP público serverinfo em loopback. Só uma resposta XML válida com estado reconhecido é considerada disponível. Uma sessão ocupada não identifica o cliente como Nintendo Switch. Abrir Sunshine encaminha ao painel HTTPS local; autenticação e eventuais avisos de certificado são tratados pelo usuário no navegador.
+O Sunshine é verificado no endpoint HTTP público serverinfo em loopback. Só uma resposta XML válida com estado reconhecido é considerada disponível. O estado ocupado do protocolo não é usado para afirmar interação ativa. O painel mostra Ligado quando há resposta válida do Sunshine e Indisponível quando não há. Abrir Sunshine encaminha ao painel HTTPS local; autenticação e eventuais avisos de certificado são tratados pelo usuário no navegador.
 
 Wake-on-LAN lê o destino salvo; o envio não prova que a máquina ligou. Desligamento continua restrito ao computador local, com confirmação modal e sem fechamento forçado de aplicativos.
 
@@ -49,3 +49,8 @@ O recurso Rust opcional lighting-tuya permite compilar/testar esse conector sepa
 - cargo test --manifest-path src-tauri/Cargo.toml --lib --features lighting-tuya: inclui o código adiado do LED.
 
 Os testes não desligam equipamentos nem usam destinos reais de Wake-on-LAN.
+## Validação manual — 17/10/2026
+
+O usuário confirmou controle real do PC gamer pelo Nintendo Switch via Moonlight, usando o Sunshine instalado no PC. Isso valida o fluxo de streaming e controle no ambiente do usuário.
+
+Em seguida, o usuário relatou o indicador de uso ativo mesmo sem interação no Switch. A apresentação foi alterada para disponibilidade do serviço: Ligado quando o Sunshine responde e Indisponível quando não responde. Nenhum desses estados afirma que o console está em uso.

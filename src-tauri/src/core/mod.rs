@@ -114,9 +114,8 @@ fn read_catalog(settings: &Settings) -> Catalog {
         },
         Device {
             id: DeviceId::SwitchStreaming, name: "Streaming para Switch".into(),
-            status: match sunshine.session_in_use {
-                Some(true) => "Sessão em uso", Some(false) => "Sunshine disponível", None => "Não disponível",
-            }.into(),
+            status: if sunshine.reachable { "Ligado" } else { "Indisponível" }.into(),
+
             detail: sunshine.detail,
             capabilities: vec![capability(ActionId::OpenSunshine, sunshine.installed || sunshine.reachable, "Sunshine não detectado neste PC.", false)],
         },

@@ -6,7 +6,6 @@ use std::{path::PathBuf, time::Duration};
 pub struct SunshineStatus {
     pub installed: bool,
     pub reachable: bool,
-    pub session_in_use: Option<bool>,
     pub detail: String,
 }
 
@@ -58,9 +57,8 @@ pub fn probe(port: u16) -> SunshineStatus {
     SunshineStatus {
         installed,
         reachable: session.is_some(),
-        session_in_use: session,
         detail: if session.is_some() {
-            "Servidor local respondeu. Isso não identifica qual aparelho está conectado.".into()
+            "Sunshine está ligado e respondendo neste PC.".into()
         } else {
             "Sem resposta válida do Sunshine. Confira o serviço e a porta configurada.".into()
         },
