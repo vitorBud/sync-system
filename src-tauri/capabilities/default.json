@@ -1,1 +1,11 @@
-{"identifier":"main-window","description":"Movimentação e fechamento da janela principal","windows":["main"],"permissions":["core:default","core:window:allow-start-dragging","core:window:allow-close"]}
+{
+    "identifier": "main-window",
+    "description": "Movimentação da janela principal",
+    "windows": [
+        "main"
+    ],
+    "permissions": [
+        "core:default",
+        "core:window:allow-start-dragging"
+    ]
+}

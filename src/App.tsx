@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { Notes } from './features/notes/Notes';
-import { closeWindow, dragWindow, native, resizePanel } from './platform/window';
+import { Controls } from './features/controls/Controls';
+import { closeWindow, dragWindow, hideWindow, native, resizePanel } from './platform/window';
 
 export function App() {
   const [expanded, setExpanded] = useState(false);
   const [focus, setFocus] = useState(false);
+  const [view, setView] = useState<'devices' | 'personal'>('devices');
   const [error, setError] = useState('');
   const toggleRef = useRef<HTMLButtonElement>(null);
   const busy = useRef(false);
@@ -56,14 +58,29 @@ export function App() {
     finally {
       animation?.cancel();
       busy.current = false;
+      // Content may finish loading while resize observations are paused for motion.
+      if (panelRef.current && shellRef.current) {
+        await resizePanel(true, Math.ceil(shellRef.current.getBoundingClientRect().height))
+          .catch(() => setError('Não foi possível ajustar a janela ao conteúdo.'));
+      }
     }
   }
   useEffect(() => {
-    function onKey(e: KeyboardEvent) { if (e.key === 'Escape' && expanded) void toggle(false); }
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape' && expanded && !e.defaultPrevented && !document.querySelector('dialog[open]')) void toggle(false); }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [expanded]);
 
+  useEffect(() => {
+    if (!expanded || !shellRef.current) return;
+    const observer = new ResizeObserver(() => {
+      if (busy.current || !shellRef.current) return;
+      void resizePanel(true, Math.ceil(shellRef.current.getBoundingClientRect().height))
+        .catch(() => setError('Não foi possível ajustar a janela ao conteúdo.'));
+    });
+    observer.observe(shellRef.current);
+    return () => observer.disconnect();
+  }, [expanded]);
   return <main ref={shellRef} className="shell">
     <header className="widget glass">
       <span className="grip" title="Arrastar janela" aria-hidden="true" onPointerDown={e => {
@@ -79,12 +96,19 @@ export function App() {
     {expanded && <section ref={panelRef} id="panel" className="panel glass" aria-label="Painel Sync System">
       <div className="eyebrow">SEU PEQUENO CENTRO</div>
       <h1>Menos ruído.<br /><span>Mais presença.</span></h1>
-      <p className="intro">Um espaço para organizar o agora.</p>
+      <p className="intro">Seus computadores e conexões, em um só lugar.</p>
+      <nav className="panel-tabs" aria-label="Área do painel">
+        <button aria-pressed={view === 'devices'} onClick={() => setView('devices')}>Dispositivos</button>
+        <button aria-pressed={view === 'personal'} onClick={() => setView('personal')}>Pessoal</button>
+      </nav>
+      {view === 'devices' ? <Controls /> : <>
       <section className="card focus-card"><div><span className="card-icon">◉</span><h2>Modo foco</h2><p>{focus ? 'Um passo de cada vez.' : 'Escolha o que merece sua atenção.'}</p></div>
         <button className="switch" role="switch" aria-checked={focus} aria-label="Modo foco" onClick={() => setFocus(!focus)}><span /></button>
       </section>
       <Notes />
+      </>}
       <footer><span><i />Tudo acontece aqui</span><button onClick={() => void toggle(false)}>Recolher <kbd>Esc</kbd></button>
+        {native && <button title="Voltar pelo ícone na bandeja do Windows" onClick={() => void hideWindow().catch(() => setError('Não foi possível ocultar o widget.'))}>Ocultar</button>}
         {native && <button onClick={() => void closeWindow().catch(() => setError('Não foi possível sair.'))}>Sair</button>}</footer>
     </section>}
     {error && <p className="error" role="alert">{error}</p>}

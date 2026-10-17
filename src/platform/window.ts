@@ -9,9 +9,9 @@ export async function dragWindow() {
     await getCurrentWindow().startDragging();
   }
 }
+export async function hideWindow() {
+  if (native) await invoke('hide_widget');
+}
 export async function closeWindow() {
-  if (native) {
-    const { getCurrentWindow } = await import('@tauri-apps/api/window');
-    await getCurrentWindow().close();
-  }
+  if (native) await invoke('quit_app');
 }

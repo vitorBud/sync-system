@@ -330,3 +330,45 @@ html[data-runtime="native"] #root {
     overscroll-behavior: none;
 }
 .brand small{display:block;font-size:7px;letter-spacing:1.6px;line-height:1.4;color:#bec1d6}
+
+/* Keep the glass frame stationary while longer device controls scroll inside. */
+.panel { max-height: 620px; overflow-y: auto; overscroll-behavior: contain; }
+.panel-tabs { display:flex; gap:4px; padding:4px; margin:0 0 20px; border:1px solid #ffffff14; border-radius:12px; background:#00000012; }
+.panel-tabs button { flex:1; border:0; border-radius:9px; padding:8px; font-size:11px; color:#bfc5d4; background:transparent; }
+.panel-tabs button[aria-pressed="true"] { background:#ffffff14; color:#f4f5fb; }
+.section-heading { display:flex; align-items:center; justify-content:space-between; margin:0 0 12px; gap:8px; font-size:8px; letter-spacing:1.4px; color:#b8bdcc; }
+.section-heading button { border:0; background:transparent; color:#d1c7ff; font-size:10px; padding:4px; }
+.device-card { margin-bottom:10px; }
+.device-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:7px; }
+.device-heading h2 { margin:0; }
+.device-badge { flex-shrink:0; font-size:8px; color:#b9c0d0; border:1px solid #ffffff20; border-radius:20px; padding:4px 7px; }
+.device-badge.available { color:#ade2c8; background:#a0d9be0a; border-color:#a0d9be30; }
+.device-card p { line-height:1.6; }
+.device-card small { display:block; font-size:9px; color:#aeb6c8; line-height:1.6; margin-top:8px; }
+.device-actions { display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+.device-actions button { border:1px solid #ffffff24; border-radius:9px; background:#ffffff0d; padding:7px 9px; font-size:10px; }
+button:disabled { opacity:.4; cursor:default; }
+.device-settings { display:grid; gap:10px; margin-top:14px; }
+.device-settings label { display:grid; gap:5px; font-size:10px; color:#c8cedc; }
+.device-settings input { min-width:0; width:100%; border:1px solid #ffffff25; border-radius:8px; padding:9px; background:#00000018; color:#f4f5fb; font:inherit; }
+.device-settings input:focus-visible { outline:2px solid #bfc4ff; outline-offset:2px; }
+.power-confirm { margin-top:12px; padding:12px; border:1px solid #e8c1a64d; border-radius:12px; background:#b5754710; }
+.power-confirm strong { font-size:11px; }
+.power-confirm p { margin-top:7px; }
+.control-feedback { font-size:10px; line-height:1.6; color:#e2deef; background:#ffffff09; border-radius:10px; padding:10px; overflow-wrap:anywhere; }
+.device-settings select{width:100%;min-width:0;border:1px solid #ffffff25;border-radius:8px;padding:9px;background:#303647;color:#f4f5fb;font:inherit}
+.device-settings select:focus-visible{outline:2px solid #bfc4ff;outline-offset:2px}
+.device-settings details{font-size:10px;color:#c8cedc}
+.device-settings summary{cursor:pointer;margin-bottom:8px}
+.setup-link{font-size:10px;color:#d1c7ff;line-height:1.6}
+.text-button{font-size:10px;color:#e5c4ba;background:transparent;border:0;text-align:left;padding:6px 0}
+.section-tools{display:flex;align-items:center;gap:6px}
+.checked-at,.deferred-feature{display:block;font-size:9px;color:#aeb6c8;line-height:1.6}
+.deferred-feature{margin:12px 0 0}
+.check-label{display:flex!important;align-items:center;gap:8px!important}
+.check-label input{width:auto!important;accent-color:#bfb2f0}
+.shutdown-dialog{max-width:calc(100vw - 40px);width:320px;border:1px solid #ffffff40;border-radius:20px;padding:20px;background:#303646;color:#f4f5fb}
+.shutdown-dialog::backdrop{background:#101521b8}
+.shutdown-dialog h2{font-size:16px;margin:0 0 12px}
+.shutdown-dialog p{font-size:12px;line-height:1.6;color:#cbd1df}
+.shutdown-dialog .danger-action{border-color:#e4a7a766;color:#f7cece}
